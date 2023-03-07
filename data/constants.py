@@ -1,0 +1,9 @@
+GAME_VERSION = '0.1'
+
+SCREEN_SIZE = (1280, 720)
+BG_COLOR = 'yellow'
+SCREEN_CENTER = SCREEN_SIZE[0] // 2
+
+MAIN_MENU = []
+
+GAME_ICON_LOCATION = 'favicon.jpeg'
