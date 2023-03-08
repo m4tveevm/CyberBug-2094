@@ -12,6 +12,7 @@ def main():
     #     # const.GAME_OVER: game_over.GameOverState
     # }
     main_menu.MainMenuState(0)
+
     # while True:
     #     for event in main_menu.pygame.event.get():
     #         if event:

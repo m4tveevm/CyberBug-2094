@@ -11,6 +11,14 @@ class MainMenuState(Game_screen):
         self.start_time = start_time
         self.sprites = pygame.sprite.AbstractGroup()
         self.start()
+        self.quit, self.next = False, False
+
+
+    def status(self):
+        if self.quit:
+            return 'q'
+        elif self.done:
+            return self.next
 
     def start(self):
         pygame.mouse.set_visible(True)
@@ -18,6 +26,8 @@ class MainMenuState(Game_screen):
         self.setup_title()
         self.setup_buttons()
         self.update(self.screen, 0)
+        self.menu_music = tools.load_music("menu_music.mp3")
+        self.menu_music.play(loops=9999999, fade_ms=100)
         while True:
             for event in pygame.event.get():
                 pygame.display.flip()
@@ -79,9 +89,10 @@ class MainMenuState(Game_screen):
                     1] <= self.button_play.y + self.button_play.h]):
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
             if event.type == pygame.MOUSEBUTTONUP:
-                pygame.mouse.set_visible(False)
-                self.next = const.LEVEL
+                # pygame.mouse.set_visible(False)
+                # self.next = const.LEVEL
                 self.done = True
+
 
         elif all([self.button_quit.x <= pygame.mouse.get_pos()[
             0] <= self.button_quit.x + self.button_quit.w,
@@ -89,8 +100,6 @@ class MainMenuState(Game_screen):
                       1] <= self.button_quit.y + self.button_quit.h]):
             if event.type == pygame.MOUSEBUTTONUP:
                 self.quit = True
-        else:
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:

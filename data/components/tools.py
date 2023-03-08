@@ -17,3 +17,10 @@ def load_image(name, colorkey=None):
     else:
         image = image.convert_alpha()
     return image
+
+def load_music(name):
+    fullname = os.path.join('resources', name)
+    if not os.path.isfile(fullname):
+        print(f"Файл с медиа '{fullname}' не найден")
+    else:
+        return pygame.mixer.Sound(fullname)
