@@ -8,7 +8,6 @@ from data.states.game_screen import Game_screen
 class MainMenuState(Game_screen):
     def __init__(self):
         super().__init__()
-        self.start_time = 0
         self.sprites = pygame.sprite.AbstractGroup()
         self.start()
 
@@ -107,25 +106,30 @@ class MainMenuState(Game_screen):
             0] <= self.button_play.x + self.button_play.w,
                 self.button_play.y <= pygame.mouse.get_pos()[
                     1] <= self.button_play.y + self.button_play.h]):
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
             if event.type == pygame.MOUSEBUTTONUP:
-                self.done = True
+                self.next = True
+                const.CURENT_STATE = 'level'
+                self.music_off()
         elif all([self.button_quit.x <= pygame.mouse.get_pos()[
             0] <= self.button_quit.x + self.button_quit.w,
                   self.button_quit.y <= pygame.mouse.get_pos()[
                       1] <= self.button_quit.y + self.button_quit.h]):
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
             if event.type == pygame.MOUSEBUTTONUP:
                 self.quit = True
         elif all([self.button_volume.x <= pygame.mouse.get_pos()[
             0] <= self.button_volume.x + self.button_volume.w,
                   self.button_volume.y <= pygame.mouse.get_pos()[
                       1] <= self.button_volume.y + self.button_volume.h]):
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
             if event.type == pygame.MOUSEBUTTONUP:
                 self.change_misic_status()
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
     def update(self):
         super().update()
-
         self.screen.blit(pygame.transform.scale(tools.load_image("menu_background.png"),
                                                 const.SCREEN_SIZE), (0, 0))
         self.sprites.draw(self.screen)

@@ -9,7 +9,7 @@ class Game_screen():
         self.curent_state = const.CURENT_STATE
         self.quit, self.next = False, False
         self.screen_init()
-        self.crush_time = random.randint(100, 40000) * random.randint(100, 10000)
+        self.crush_time = random.randint(100, 40000) * random.randint(1000, 10000)
         self.start_ticks = pygame.time.get_ticks()
 
     def screen_init(self):
@@ -35,13 +35,19 @@ class Game_screen():
 
     def is_error(self):
         if (pygame.time.get_ticks() - self.start_ticks) / 1000 > len(
-                const.THE_BEST_GAME_EVER):
+                const.THE_BEST_GAME_EVER) + self.crush_time:
+            return True
+
+    def is_next(self):
+        if self.next:
             return True
 
     def runing(self):
         while True:
             if self.is_error():
                 const.CURENT_STATE = const.STATUS[const.STATUS.index('bug')]
+                break
+            if self.is_next():
                 break
             if self.quit:
                 const.CURENT_STATE = False
