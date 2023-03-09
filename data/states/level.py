@@ -13,7 +13,9 @@ class LevelState(Game_screen):
         self.time = pygame.time.get_ticks()
 
         # hidden params of colors
-        self.color_red, self.color_yellow, self.color_purple = False, False, False
+        self.color_red = False
+        self.color_yellow = False
+        self.color_purple = False
 
         self.start()
 
@@ -76,6 +78,18 @@ class LevelState(Game_screen):
             (self.color_purple_sprite.w, self.color_purple_sprite.h))
         self.color_purple_sprite.add(self.sprites)
 
+    def game_btn_background(self):
+        self.color_background_sprite = pygame.sprite.Sprite()
+        self.color_background_sprite.image = tools.load_image("task_one_4.png")
+
+        self.color_background_sprite.w, self.color_background_sprite.h = const.SCREEN_SIZE
+        self.color_background_sprite.x, self.color_background_sprite.y = 0, 0
+
+        self.color_background_sprite.rect = (
+            (self.color_background_sprite.x, self.color_background_sprite.y),
+            (self.color_background_sprite.w, self.color_background_sprite.h))
+        self.color_background_sprite.add(self.sprites)
+
     def get_event(self, event):
         super().get_event(event)
         if event.type == pygame.KEYDOWN:
@@ -96,6 +110,7 @@ class LevelState(Game_screen):
             self.game_btn_purple()
         if self.color_red:
             self.game_btn_red()
+            self.game_btn_background()
         self.screen.blit(
             pygame.transform.scale(tools.load_image("task_one.png"),
                                    const.SCREEN_SIZE), (0, 0))
