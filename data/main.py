@@ -8,8 +8,8 @@ from data.states import main_menu
 def main():
     # states = {
     #     const.MAIN_MENU: main_menu.MainMenuState,
-    #     # const.LEVEL: level.LevelState,
-    #     # const.GAME_OVER: game_over.GameOverState
+    #     const.LEVEL: level.LevelState,
+    #     const.GAME_OVER: game_over.GameOverState
     # }
     main_menu.MainMenuState(0)
 
