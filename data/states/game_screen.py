@@ -21,6 +21,5 @@ class Game_screen():
             if self.quit:
                 break
             for event in pygame.event.get():
-                pygame.display.flip()
                 self.curent_state.get_event(event)
                 self.curent_state.update()

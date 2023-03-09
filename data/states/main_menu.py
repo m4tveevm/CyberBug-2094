@@ -6,7 +6,7 @@ from data.states.game_screen import Game_screen
 
 
 class MainMenuState(Game_screen):
-    def __init__(self, start_time):
+    def __init__(self, start_time=0):
         super().__init__()
         self.start_time = start_time
         self.sprites = pygame.sprite.AbstractGroup()
@@ -103,3 +103,4 @@ class MainMenuState(Game_screen):
         self.screen.blit(pygame.transform.scale(tools.load_image("menu_background.png"),
                                                 const.SCREEN_SIZE), (0, 0))
         self.sprites.draw(self.screen)
+        pygame.display.flip()
