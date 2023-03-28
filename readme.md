@@ -14,8 +14,10 @@ download files from this GitHub repo.
 ## Dependencies
 
 ```python
-pygame >= 2.1.2
-PyQt5 >= 5.15.7
+pygame>=2.1.2
+PyQt5>=5.15.9
+requests>=2.28.2
+BeautifulSoup4>=4.11.2
 ```
 
 To install dependencies:

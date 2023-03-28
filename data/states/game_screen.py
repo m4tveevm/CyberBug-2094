@@ -4,12 +4,14 @@ from data import constants as const
 from data.components import tools
 
 
-class Game_screen():
+class Game_Screen():
     def __init__(self):
+        self.music_playing = False
         self.curent_state = const.CURENT_STATE
         self.quit, self.next = False, False
         self.screen_init()
-        self.crush_time = random.randint(100, 40000) * random.randint(1000, 10000)
+        self.states_music = tools.load_music("menu_music.mp3")
+        self.crush_time = random.randint(100, 300)
         self.start_ticks = pygame.time.get_ticks()
 
     def screen_init(self):
@@ -21,8 +23,17 @@ class Game_screen():
     def update(self):
         pass
 
+    def change_misic_status(self):
+        if self.music_playing:
+            self.states_music.stop()
+            self.music_playing = False
+        else:
+            self.states_music.play(loops=9999999, fade_ms=100)
+            self.music_playing = True
+
     def music_off(self):
-        pass
+        self.states_music.stop()
+        self.music_playing = False
 
     def status(self):
         if self.quit:
@@ -56,4 +67,4 @@ class Game_screen():
                 if self.quit:
                     break
                 self.get_event(event)
-                self.update()
+            self.update()
