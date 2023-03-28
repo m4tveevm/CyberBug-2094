@@ -10,7 +10,7 @@ ___
 
 # How to start playing?
 
-Download UpdSpace launcher from our website (https://updspace.com/launcer) or just
+Download UpdSpace launcher from our website (https://updspace.com/launcher) or just
 download files from this GitHub repo.
 
 ## Dependencies
