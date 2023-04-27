@@ -1,17 +1,15 @@
-import pygame
+import pygame, random
 
 from data import constants as const
 from data.components import tools
-from data.states.game_screen import Game_screen
+from data.states.game_screen import Game_Screen
 
 
-class Bug_Screen(Game_screen):
+class Bug_screen(Game_Screen):
     def __init__(self):
         super().__init__()
-        self.menu_music = tools.load_music("error_music.mp3")
-        self.menu_music.play()
+        tools.load_music(random.choice(["error_music.mp3", "bug.mp3"])).play()
         self.start_ticks = pygame.time.get_ticks()
-
         self.quit = False
         self.buging()
 
@@ -22,7 +20,7 @@ class Bug_Screen(Game_screen):
                 self.get_event(event)
             pygame.display.flip()
             if (pygame.time.get_ticks() - self.start_ticks) > 5000:
-                const.CURENT_STATE = False
+                const.CURRENT_STATE = False
                 break
 
     def animate(self):

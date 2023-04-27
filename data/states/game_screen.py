@@ -4,12 +4,14 @@ from data import constants as const
 from data.components import tools
 
 
-class Game_screen():
+class Game_Screen():
     def __init__(self):
-        self.curent_state = const.CURENT_STATE
+        self.music_playing = False
+        self.curent_state = const.CURRENT_STATE
         self.quit, self.next = False, False
         self.screen_init()
-        self.crush_time = random.randint(100, 40000) * random.randint(1000, 10000)
+        self.states_music = tools.load_music("menu_music.mp3")
+        self.crush_time = random.randint(100, 300)
         self.start_ticks = pygame.time.get_ticks()
 
     def screen_init(self):
@@ -21,8 +23,17 @@ class Game_screen():
     def update(self):
         pass
 
+    def change_misic_status(self):
+        if self.music_playing:
+            self.states_music.stop()
+            self.music_playing = False
+        else:
+            self.states_music.play(loops=9999999, fade_ms=100)
+            self.music_playing = True
+
     def music_off(self):
-        pass
+        self.states_music.stop()
+        self.music_playing = False
 
     def status(self):
         if self.quit:
@@ -34,7 +45,7 @@ class Game_screen():
                 self.quit = True
 
     def is_error(self):
-        if (pygame.time.get_ticks() - self.start_ticks) / 1000 > len(
+        if (pygame.time.get_ticks() - self.start_ticks) / 300 > len(
                 const.THE_BEST_GAME_EVER) + self.crush_time:
             return True
 
@@ -45,15 +56,16 @@ class Game_screen():
     def runing(self):
         while True:
             if self.is_error():
-                const.CURENT_STATE = const.STATUS[const.STATUS.index('bug')]
+                const.CURRENT_STATE = const.STATUS[const.STATUS.index('bug')]
+                print('Oops, game has crashed!')
                 break
             if self.is_next():
                 break
             if self.quit:
-                const.CURENT_STATE = False
+                const.CURRENT_STATE = False
                 break
             for event in pygame.event.get():
                 if self.quit:
                     break
                 self.get_event(event)
-                self.update()
+            self.update()

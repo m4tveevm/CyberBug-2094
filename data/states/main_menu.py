@@ -2,13 +2,14 @@ import pygame
 
 from data import constants as const
 from data.components import tools
-from data.states.game_screen import Game_screen
+from data.states.game_screen import Game_Screen
 
 
-class MainMenuState(Game_screen):
+class MainMenuState(Game_Screen):
     def __init__(self):
         super().__init__()
         self.sprites = pygame.sprite.AbstractGroup()
+        self.online_version = tools.get_version()
         self.start()
 
     def status(self):
@@ -21,23 +22,9 @@ class MainMenuState(Game_screen):
         self.setup_title()
         self.setup_buttons()
         self.update()
-        self.menu_music = tools.load_music("menu_music.mp3")
-        self.menu_music.play(loops=9999999, fade_ms=100)
+        self.states_music.play(loops=9999999, fade_ms=100)
         self.music_playing = True
         self.runing()
-
-    def change_misic_status(self):
-        if self.music_playing:
-            self.menu_music.stop()
-            self.music_playing = False
-        else:
-            self.menu_music.play(loops=9999999, fade_ms=100)
-            self.music_playing = True
-
-    def music_off(self):
-        super().music_off()
-        self.menu_music.stop()
-        self.music_playing = False
 
     def setup_title(self):
         self.title = pygame.sprite.Sprite()
@@ -109,7 +96,7 @@ class MainMenuState(Game_screen):
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
             if event.type == pygame.MOUSEBUTTONUP:
                 self.next = True
-                const.CURENT_STATE = 'level'
+                const.CURRENT_STATE = 'level'
                 self.music_off()
         elif all([self.button_quit.x <= pygame.mouse.get_pos()[
             0] <= self.button_quit.x + self.button_quit.w,
@@ -128,9 +115,17 @@ class MainMenuState(Game_screen):
         else:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
+    def curent_version(self):
+        font = pygame.font.Font(None, 50)
+        text = font.render(self.online_version, True, 'black')
+        text_x = (const.SCREEN_CENTER - text.get_width()) * 2.5
+        text_y = const.SCREEN_SIZE[1] * 0.1 - text.get_height() // 2
+        self.screen.blit(text, (text_x, text_y))
+
     def update(self):
         super().update()
         self.screen.blit(pygame.transform.scale(tools.load_image("menu_background.png"),
                                                 const.SCREEN_SIZE), (0, 0))
+        self.curent_version()
         self.sprites.draw(self.screen)
         pygame.display.flip()
